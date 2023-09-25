@@ -1,0 +1,40 @@
+let img; // 이미지 객체
+let angle = 340; // 회전 각도 (도)
+let scaleValue = 0.5; // 축소/확대 비율
+let centerX;
+let centerY;
+
+function preload() {
+  img = loadImage('https://raw.githubusercontent.com/joincheol/img_rotate_transform/main/doc1.jpg', () => {
+    // 이미지가 완전히 로드되었을 때 호출되는 콜백 함수
+    centerX = width / 2; // 회전 중심의 x-좌표
+    centerY = height / 2; // 회전 중심의 y-좌표
+  });
+}
+
+function setup() {
+  createCanvas(800, 800);
+  angleMode(DEGREES); // 각도 모드 설정
+}
+
+function draw() {
+  background(220);
+
+  // 이미지가 완전히 로드되었는지 확인
+  if (img) {
+    // 이미지를 화면 가운데로 이동
+    translate(width / 2, height / 2);
+
+    // alpha 및 beta 값을 계산합니다.
+    let alpha = scaleValue * cos(angle);
+    let beta = scaleValue * sin(angle);
+
+    // 사용자 정의 변환 행렬을 적용합니다.
+    applyMatrix(alpha, -beta, beta, alpha, (1 - alpha) * centerX - beta * centerY, beta * centerX + (1 - alpha) * centerY);
+
+    // 사용자 정의 변환을 적용한 이미지를 그립니다.
+    let scaledWidth = img.width * scaleValue; // 이미지의 너비 조절
+    let scaledHeight = img.height * scaleValue; // 이미지의 높이 조절
+    image(img, -scaledWidth / 2, -scaledHeight / 2, scaledWidth, scaledHeight);
+  }
+}
