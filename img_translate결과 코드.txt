@@ -1,5 +1,5 @@
 let img; // 이미지 객체
-let angle = 340; // 회전 각도 (도)
+let angle = 340; // 회전 각도 (도)(값 조절하면 회전가능)
 let scaleValue = 0.5; // 축소/확대 비율
 let centerX;
 let centerY;
